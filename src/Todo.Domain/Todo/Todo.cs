@@ -1,4 +1,6 @@
 using Todo.Domain.Common.Models;
+using Todo.Domain.Menu.ValueObjects;
+using Todo.Domain.Todo.Entities;
 using Todo.Domain.Todo.Enums;
 using Todo.Domain.Todo.ValueObjects;
 
@@ -6,12 +8,19 @@ namespace Todo.Domain.Todo;
 
 public class Todo : AggregateRoot<TodoId>
 {
+
+    private List<TodoEtapa> _todoEtapas = new();
+
     public string Descricao { get; set; }
     public TodoTipo Tipo { get; set; }
     public TodoRepeticaoTipo RepeticaoTipo { get; set; }
     public DateTime DataConclusao { get; set; }
     public TodoStatus Status { get; set; }
     public DateTime DataHoraLembrar { get; set; }
+
+    public MenuId MenuId { get; set; }
+
+    public IReadOnlyList<TodoEtapa> TodoEtapas => _todoEtapas.ToList().AsReadOnly();
 
     private Todo(
         TodoId todoId,
@@ -20,7 +29,8 @@ public class Todo : AggregateRoot<TodoId>
         TodoRepeticaoTipo repeticaoTipo,
         DateTime dataConclusao,
         TodoStatus status,
-        DateTime dataHoraLembrar) : base(todoId)
+        DateTime dataHoraLembrar,
+        MenuId menuId) : base(todoId)
     {
         Descricao = descricao;
         Tipo = tipo;
@@ -28,6 +38,7 @@ public class Todo : AggregateRoot<TodoId>
         DataConclusao = dataConclusao;
         Status = status;
         DataHoraLembrar = dataHoraLembrar;
+        MenuId = menuId;
     }
 
     public static Todo Create(
@@ -36,7 +47,8 @@ public class Todo : AggregateRoot<TodoId>
         TodoRepeticaoTipo repeticaoTipo,
         DateTime dataConclusao,
         TodoStatus status,
-        DateTime dataHoraLembrar)
+        DateTime dataHoraLembrar,
+        MenuId menuId)
     {
         return new Todo(
             TodoId.Create(),
@@ -45,7 +57,15 @@ public class Todo : AggregateRoot<TodoId>
             repeticaoTipo,
             dataConclusao,
             status,
-            dataHoraLembrar);
+            dataHoraLembrar,
+            menuId);
+    }
+
+    public TodoEtapa AddEtapa(string descricao, DateTime dataExpiracao)
+    {
+        var todoEtapa = TodoEtapa.Create(descricao, dataExpiracao, false);
+        _todoEtapas.Append(todoEtapa);
+        return todoEtapa;
     }
 
 }
