@@ -10,6 +10,7 @@ public static class AppSettings
             app.UseSwaggerUI();
         }
         app.UseHttpsRedirection();
+        app.MapControllers();
 
         return app;
     }

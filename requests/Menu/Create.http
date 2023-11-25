@@ -1,0 +1,9 @@
+@hostname = http://localhost:5298
+
+POST {{hostname}}/api/Menu
+Content-Type: application/json
+
+{
+  "nome": "string",
+  "iconUrl": "string"
+}
