@@ -1,4 +1,5 @@
 using Todo.Api.Common.Mappings;
+using Todo.Api.Common.Middlewares;
 
 namespace Todo.Api;
 
@@ -8,6 +9,8 @@ public static class DependencyInjection
     {
 
         services.AddEndpointsApiExplorer();
+        services.AddLogging();
+        services.AddTransient<GlobalExceptionHandlingMiddleware>();
         services.AddSwaggerGen();
         services.AddControllers();
         services.AddMappings();

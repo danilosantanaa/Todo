@@ -20,6 +20,8 @@ public class MenuController : ApiController
     [HttpPost]
     public async Task<IActionResult> Create(MenuRequest request)
     {
+        throw new Exception("Error");
+
         var command = _mapper.Map<MenuCreateCommand>(request);
         var result = await _mediator.Send(command);
         return Ok(result);

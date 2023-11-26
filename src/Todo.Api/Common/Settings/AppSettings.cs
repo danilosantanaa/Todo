@@ -1,3 +1,5 @@
+using Todo.Api.Common.Middlewares;
+
 namespace Todo.Api.Common.Settings;
 
 public static class AppSettings
@@ -11,6 +13,7 @@ public static class AppSettings
         }
         app.UseHttpsRedirection();
         app.MapControllers();
+        app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
         return app;
     }
