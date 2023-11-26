@@ -1,8 +1,7 @@
 using FluentAssertions;
 
-using Todo.Domain.Menu.ValueObjects;
-
-using menuNamespace = Todo.Domain.Menu;
+using Todo.Domain.Menus;
+using Todo.Domain.Menus.ValueObjects;
 
 namespace Todo.Domain.UnitTests.MenuTest;
 
@@ -17,7 +16,7 @@ public class MenuTest
         // Act
         var menuId = MenuId.Create();
 
-        var menu = menuNamespace.Menu.Create(menuId, nome, iconUrl);
+        var menu = Menu.Create(menuId, nome, iconUrl);
 
         // Assert
         menu.Nome.Should().Be(nome);

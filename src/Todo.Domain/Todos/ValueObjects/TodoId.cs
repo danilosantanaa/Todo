@@ -1,6 +1,6 @@
 using Todo.Domain.Common.Models;
 
-namespace Todo.Domain.Todo.ValueObjects;
+namespace Todo.Domain.Todos.ValueObjects;
 
 public sealed class TodoId : ValueObject
 {

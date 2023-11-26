@@ -1,7 +1,7 @@
 using Todo.Domain.Common.Models;
-using Todo.Domain.Todo.ValueObjects;
+using Todo.Domain.Todos.ValueObjects;
 
-namespace Todo.Domain.Todo.Entities;
+namespace Todo.Domain.Todos.Entities;
 
 public sealed class TodoEtapa : Entity<TodoEtapaId>
 {

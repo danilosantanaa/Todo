@@ -1,24 +1,24 @@
 using Todo.Domain.Common.Models;
-using Todo.Domain.Menu.ValueObjects;
-using Todo.Domain.Todo.Entities;
-using Todo.Domain.Todo.Enums;
-using Todo.Domain.Todo.ValueObjects;
+using Todo.Domain.Menus.ValueObjects;
+using Todo.Domain.Todos.Entities;
+using Todo.Domain.Todos.Enums;
+using Todo.Domain.Todos.ValueObjects;
 
 namespace Todo.Domain.Todo;
 
 public class Todo : AggregateRoot<TodoId>
 {
 
-    private List<TodoEtapa> _todoEtapas = new();
+    private readonly List<TodoEtapa> _todoEtapas = new();
 
-    public string Descricao { get; set; }
-    public TodoTipo Tipo { get; set; }
-    public TodoRepeticaoTipo RepeticaoTipo { get; set; }
-    public DateTime DataConclusao { get; set; }
-    public TodoStatus Status { get; set; }
-    public DateTime DataHoraLembrar { get; set; }
+    public string Descricao { get; private set; }
+    public TodoTipo Tipo { get; private set; }
+    public TodoRepeticaoTipo RepeticaoTipo { get; private set; }
+    public DateTime DataConclusao { get; private set; }
+    public TodoStatus Status { get; private set; }
+    public DateTime DataHoraLembrar { get; private set; }
 
-    public MenuId MenuId { get; set; }
+    public MenuId MenuId { get; private set; }
 
     public IReadOnlyList<TodoEtapa> TodoEtapas => _todoEtapas.ToList().AsReadOnly();
 

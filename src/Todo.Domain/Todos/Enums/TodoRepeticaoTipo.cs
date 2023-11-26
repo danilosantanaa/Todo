@@ -1,4 +1,4 @@
-namespace Todo.Domain.Todo.Enums;
+namespace Todo.Domain.Todos.Enums;
 
 public enum TodoRepeticaoTipo
 {

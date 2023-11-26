@@ -1,6 +1,6 @@
 using Todo.Domain.Common.Models;
 
-namespace Todo.Domain.Menu.ValueObjects;
+namespace Todo.Domain.Menus.ValueObjects;
 
 public sealed class MenuId : ValueObject
 {

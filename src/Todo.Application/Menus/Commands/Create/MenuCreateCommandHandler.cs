@@ -1,19 +1,19 @@
 using MediatR;
 
-using Todo.Application.Menu.Commands.Create;
-using Todo.Application.Menu.Common;
-using Todo.Domain.Menu.ValueObjects;
+using Todo.Application.Menus.Commands.Create;
+using Todo.Application.Menus.Common;
+using Todo.Domain.Menus.ValueObjects;
 
-using MenuDomain = Todo.Domain.Menu.Menu;
+using Todo.Domain.Menus;
 
-namespace Todo.Application.Menu.Commands;
+namespace Todo.Application.Menus.Commands;
 
 public sealed class MenuCreateCommandHandler : IRequestHandler<MenuCreateCommand, MenuResponse>
 {
     public Task<MenuResponse> Handle(MenuCreateCommand request, CancellationToken cancellationToken)
     {
         var menuId = MenuId.Create();
-        var menu = MenuDomain.Create(menuId, request.Nome, request.IconUrl);
+        var menu = Menu.Create(menuId, request.Nome, request.IconUrl);
 
         return Task.FromResult(new MenuResponse(menu.Id.Value, menu.Nome, menu.IconUrl));
     }

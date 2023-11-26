@@ -1,7 +1,7 @@
 using Todo.Domain.Common.Models;
-using Todo.Domain.Menu.ValueObjects;
+using Todo.Domain.Menus.ValueObjects;
 
-namespace Todo.Domain.Menu;
+namespace Todo.Domain.Menus;
 
 public class Menu : AggregateRoot<MenuId>
 {

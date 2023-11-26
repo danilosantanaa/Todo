@@ -6,7 +6,7 @@ using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
-using Todo.Application.Menu.Commands.Create;
+using Todo.Application.Menus.Commands.Create;
 using Todo.Contracts.Menu.Requests;
 
 namespace Todo.Api.Controllers;

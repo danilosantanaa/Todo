@@ -1,7 +1,7 @@
 using MediatR;
 
-using Todo.Application.Menu.Common;
+using Todo.Application.Menus.Common;
 
-namespace Todo.Application.Menu.Commands.Create;
+namespace Todo.Application.Menus.Commands.Create;
 
 public record MenuCreateCommand(string Nome, string IconUrl) : IRequest<MenuResponse>;

@@ -1,8 +1,8 @@
 using FluentAssertions;
 
-using Todo.Domain.Menu.ValueObjects;
+using Todo.Domain.Menus.ValueObjects;
 
-namespace Todo.Domain.UnitTests.Menu.ValueObjects;
+namespace Todo.Domain.UnitTests.MenuTest.ValueObjects;
 
 public class MenuIdTest
 {
