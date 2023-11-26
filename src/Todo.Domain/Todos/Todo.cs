@@ -4,7 +4,7 @@ using Todo.Domain.Todos.Entities;
 using Todo.Domain.Todos.Enums;
 using Todo.Domain.Todos.ValueObjects;
 
-namespace Todo.Domain.Todo;
+namespace Todo.Domain.Todos;
 
 public class Todo : AggregateRoot<TodoId>
 {
