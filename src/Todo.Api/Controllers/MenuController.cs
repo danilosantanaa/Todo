@@ -1,5 +1,3 @@
-using System.ComponentModel.Design;
-
 using MapsterMapper;
 
 using MediatR;
@@ -11,17 +9,12 @@ using Todo.Contracts.Menu.Requests;
 
 namespace Todo.Api.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class MenuController : ControllerBase
+public class MenuController : ApiController
 {
-    private readonly ISender _mediator;
-    private readonly IMapper _mapper;
-
-    public MenuController(ISender mediator, IMapper mapper)
+    public MenuController(
+        ISender mediator,
+        IMapper mapper) : base(mediator, mapper)
     {
-        _mediator = mediator;
-        _mapper = mapper;
     }
 
     [HttpPost]
