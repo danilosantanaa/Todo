@@ -13,7 +13,12 @@ public sealed class TodoEtapaId : ValueObject
 
     public static TodoEtapaId Create()
     {
-        return new TodoEtapaId(Guid.NewGuid());
+        return Create(Guid.NewGuid());
+    }
+
+    public static TodoEtapaId Create(Guid id)
+    {
+        return new TodoEtapaId(id);
     }
 
     public override IEnumerable<object> GetAtomicValues()

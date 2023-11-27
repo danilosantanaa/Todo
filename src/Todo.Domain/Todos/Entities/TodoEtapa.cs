@@ -9,12 +9,22 @@ public sealed class TodoEtapa : Entity<TodoEtapaId>
     public DateTime DataExpiracao { get; private set; }
     public bool Concluido { get; private set; }
 
-    private TodoEtapa(TodoEtapaId id, string descricao, DateTime dataExpiracao, bool concluido) : base(id)
+    public TodoId TodoId { get; private set; }
+
+    private TodoEtapa(
+        TodoEtapaId id,
+        string descricao,
+        DateTime dataExpiracao,
+        bool concluido) : base(id)
     {
         Descricao = descricao;
         DataExpiracao = dataExpiracao;
         Concluido = concluido;
     }
+
+#pragma warning disable CS8618
+    private TodoEtapa() { }
+#pragma warning restore CS8618
 
     public static TodoEtapa Create(string descricao, DateTime dataExpiracao, bool concluido)
     {

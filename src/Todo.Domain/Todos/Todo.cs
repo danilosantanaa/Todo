@@ -41,6 +41,10 @@ public class Todo : AggregateRoot<TodoId>
         MenuId = menuId;
     }
 
+#pragma warning disable CS8618
+    private Todo() { }
+#pragma warning restore CS8618
+
     public static Todo Create(
         string descricao,
         TodoTipo tipo,

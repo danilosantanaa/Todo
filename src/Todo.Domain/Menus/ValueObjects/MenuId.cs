@@ -13,7 +13,12 @@ public sealed class MenuId : ValueObject
 
     public static MenuId Create()
     {
-        return new(Guid.NewGuid());
+        return Create(Guid.NewGuid());
+    }
+
+    public static MenuId Create(Guid id)
+    {
+        return new(id);
     }
 
     public override IEnumerable<object> GetAtomicValues()
