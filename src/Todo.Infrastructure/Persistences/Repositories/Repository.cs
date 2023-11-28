@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
 using Todo.Application.Common.Interfaces.Persistence;
+using Todo.Domain.Common.Models;
 using Todo.Infrastructure.Persistence.Contexts;
 
 namespace Todo.Infrastructure.Persistence.Repositories;
@@ -35,7 +36,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity>
         return await _context.Set<TEntity>().ToListAsync(cancellationToken);
     }
 
-    public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<TEntity?> GetByIdAsync(ValueObject id, CancellationToken cancellationToken = default)
     {
         return await _context.Set<TEntity>().FindAsync(id, cancellationToken);
     }
