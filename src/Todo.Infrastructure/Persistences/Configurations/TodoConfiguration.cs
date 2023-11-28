@@ -46,6 +46,7 @@ public sealed class TodoConfiguration : IEntityTypeConfiguration<todoDomain.Todo
 
         builder.HasMany(o => o.TodoEtapas)
             .WithOne()
-            .HasForeignKey(te => te.TodoId);
+            .HasForeignKey(te => te.TodoId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
