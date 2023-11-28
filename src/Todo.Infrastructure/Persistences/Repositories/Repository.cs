@@ -5,7 +5,7 @@ using Todo.Infrastructure.Persistence.Contexts;
 
 namespace Todo.Infrastructure.Persistence.Repositories;
 
-public class Repository<TEntity> : IRepository<TEntity>
+public abstract class Repository<TEntity> : IRepository<TEntity>
     where TEntity : class
 {
     protected readonly TodoDatabaseContext _context;
@@ -38,10 +38,5 @@ public class Repository<TEntity> : IRepository<TEntity>
     public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.Set<TEntity>().FindAsync(id, cancellationToken);
-    }
-
-    public async Task<bool> SaveChangeAsync(CancellationToken cancellationToken = default)
-    {
-        return (await _context.SaveChangesAsync(cancellationToken)) > 0;
     }
 }

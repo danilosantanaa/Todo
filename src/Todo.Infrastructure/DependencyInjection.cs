@@ -8,6 +8,7 @@ using Todo.Application.Common.Interfaces.Persistence;
 using Todo.Domain.Menus;
 using Todo.Infrastructure.Persistence.Contexts;
 using Todo.Infrastructure.Persistence.Repositories;
+using Todo.Infrastructure.Persistences.Repositories;
 
 namespace Todo.Infrastructure;
 
@@ -30,7 +31,7 @@ public static class DependencyInjection
             context.UseNpgsql(configuration.GetConnectionString("PostgresConnect"))
         );
 
-        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

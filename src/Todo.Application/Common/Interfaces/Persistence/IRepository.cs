@@ -8,5 +8,4 @@ public interface IRepository<TEntity>
     void Add(TEntity entity);
     void Update(TEntity entity);
     void Delete(TEntity entity);
-    Task<bool> SaveChangeAsync(CancellationToken cancellationToken = default);
 }
