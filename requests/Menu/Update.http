@@ -1,0 +1,10 @@
+@hostname=http://localhost:5298
+@menuId=20cf98ba-0805-473b-8740-4bdeda492773
+
+PUT {{hostname}}/api/Menu/{{menuId}}
+
+Content-Type: application/json
+{
+  "nome": "Teste 1 a",
+  "iconUrl": "testessss.png"
+}

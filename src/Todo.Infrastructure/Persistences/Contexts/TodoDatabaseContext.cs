@@ -11,9 +11,9 @@ public class TodoDatabaseContext : DbContext
 {
     public TodoDatabaseContext(DbContextOptions<TodoDatabaseContext> context) : base(context) { }
 
-    DbSet<Menu> Menus { get; set; }
-    DbSet<TodoDomain.Todo> Todos { get; set; }
-    DbSet<TodoEtapa> TodoEtapas { get; set; }
+    public DbSet<Menu> Menus { get; set; }
+    public DbSet<TodoDomain.Todo> Todos { get; set; }
+    public DbSet<TodoEtapa> TodoEtapas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

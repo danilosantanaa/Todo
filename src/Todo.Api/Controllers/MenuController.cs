@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 using Todo.Application.Menus.Commands.Create;
+using Todo.Application.Menus.Commands.Update;
 using Todo.Application.Menus.Queries.GetAll;
 using Todo.Contracts.Menu.Requests;
 
@@ -18,7 +19,7 @@ public class MenuController : ApiController
     {
     }
 
-    [HttpGet("/all")]
+    [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {
         var result = await _mediator.Send(new MenuGetAllQuery());
@@ -31,5 +32,14 @@ public class MenuController : ApiController
         var command = _mapper.Map<MenuCreateCommand>(request);
         var result = await _mediator.Send(command);
         return Ok(result);
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, MenuRequest request)
+    {
+        var command = _mapper.Map<MenuUpdateCommand>((id, request));
+        await _mediator.Send(command);
+
+        return Ok(command);
     }
 }

@@ -18,4 +18,10 @@ public class Menu : AggregateRoot<MenuId>
     {
         return new Menu(id, nome, iconUrl);
     }
+
+    public void Update(string nome, string iconUrl)
+    {
+        Nome = nome;
+        IconUrl = iconUrl;
+    }
 }
