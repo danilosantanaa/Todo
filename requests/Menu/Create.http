@@ -1,4 +1,4 @@
-@hostname = http://localhost:5298
+@hostname=http://localhost:5298
 
 POST {{hostname}}/api/Menu
 Content-Type: application/json

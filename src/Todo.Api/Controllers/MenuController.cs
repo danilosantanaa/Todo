@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 using Todo.Application.Menus.Commands.Create;
+using Todo.Application.Menus.Commands.Delete;
 using Todo.Application.Menus.Commands.Update;
 using Todo.Application.Menus.Queries.GetAll;
 using Todo.Application.Menus.Queries.GetById;
@@ -50,5 +51,13 @@ public class MenuController : ApiController
         await _mediator.Send(command);
 
         return Ok(command);
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var command = new MenuDeleteCommand(id);
+        await _mediator.Send(command);
+        return Ok();
     }
 }
