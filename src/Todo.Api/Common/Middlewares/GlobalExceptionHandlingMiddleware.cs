@@ -3,6 +3,8 @@ using System.Net.Mime;
 
 using Microsoft.AspNetCore.Mvc;
 
+using Todo.Domain.Common.Errors;
+
 namespace Todo.Api.Common.Middlewares;
 
 public class GlobalExceptionHandlingMiddleware : IMiddleware
@@ -28,13 +30,19 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
 
     private async Task TreatError(HttpContext context, Exception e)
     {
+        (string title, HttpStatusCode status) errorException = e switch
+        {
+            IError error => (error.Errors[0], error.Status),
+            _ => ("Ocorreu um error enquanto processava suas informações", HttpStatusCode.InternalServerError)
+        };
+
         _logger.LogError(e, e.Message);
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        context.Response.StatusCode = (int)errorException.status;
 
         ProblemDetails problem = new()
         {
-            Status = (int)HttpStatusCode.InternalServerError,
-            Title = "Ocorreu um erro enquanto processava suas informações."
+            Status = (int)errorException.status,
+            Title = errorException.title
         };
 
         context.Response.ContentType = MediaTypeNames.Application.Json;
