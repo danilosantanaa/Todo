@@ -10,6 +10,7 @@ using Todo.Application.Menus.Commands.Update;
 using Todo.Application.Menus.Queries.GetAll;
 using Todo.Application.Menus.Queries.GetById;
 using Todo.Contracts.Menu.Requests;
+using Todo.Contracts.Menu.Response;
 
 namespace Todo.Api.Controllers;
 
@@ -41,7 +42,8 @@ public class MenuController : ApiController
     {
         var command = _mapper.Map<MenuCreateCommand>(request);
         var result = await _mediator.Send(command);
-        return Ok(result);
+        var response = _mapper.Map<MenuResponse>((result, command));
+        return Ok(response);
     }
 
     [HttpPut("{id:guid}")]
@@ -49,7 +51,6 @@ public class MenuController : ApiController
     {
         var command = _mapper.Map<MenuUpdateCommand>((id, request));
         await _mediator.Send(command);
-
         return Ok(command);
     }
 

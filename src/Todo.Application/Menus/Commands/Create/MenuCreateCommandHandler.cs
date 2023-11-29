@@ -7,7 +7,7 @@ using Todo.Application.Common.Interfaces.Persistence;
 
 namespace Todo.Application.Menus.Commands.Create;
 
-public sealed class MenuCreateCommandHandler : IRequestHandler<MenuCreateCommand, MenuResponse>
+public sealed class MenuCreateCommandHandler : IRequestHandler<MenuCreateCommand, Guid>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -15,7 +15,7 @@ public sealed class MenuCreateCommandHandler : IRequestHandler<MenuCreateCommand
     {
         _unitOfWork = unitOfWork;
     }
-    public async Task<MenuResponse> Handle(MenuCreateCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(MenuCreateCommand request, CancellationToken cancellationToken)
     {
         var menuId = MenuId.Create();
         var menu = Menu.Create(menuId, request.Nome, request.IconUrl);
@@ -23,6 +23,6 @@ public sealed class MenuCreateCommandHandler : IRequestHandler<MenuCreateCommand
         _unitOfWork.MenuRepository.Add(menu);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return new MenuResponse(menu.Id.Value, menu.Nome, menu.IconUrl);
+        return menu.Id.Value;
     }
 }
