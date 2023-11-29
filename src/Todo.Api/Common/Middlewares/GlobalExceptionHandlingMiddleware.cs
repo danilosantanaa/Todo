@@ -2,7 +2,9 @@ using System.Net;
 using System.Net.Mime;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
+using Todo.Application.Common.Errors;
 using Todo.Domain.Common.Errors;
 
 namespace Todo.Api.Common.Middlewares;
@@ -30,6 +32,46 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
 
     private async Task TreatError(HttpContext context, Exception e)
     {
+
+        ProblemDetails problem =
+            e as ValidationError is not null ?
+                ErrorValidations(context, e)
+            : ErrorDomain(context, e);
+
+        context.Response.ContentType = MediaTypeNames.Application.Json;
+        await context.Response.WriteAsJsonAsync(problem);
+    }
+
+    private ProblemDetails ErrorValidations(HttpContext context, Exception e)
+    {
+        ValidationError validationError = (ValidationError)e;
+
+        ProblemDetails problem = new()
+        {
+            Status = (int)HttpStatusCode.BadGateway,
+            Title = "Validations Errors"
+        };
+
+        Dictionary<string, List<string>> errorsDetails = new();
+        foreach (var error in validationError.Errors)
+        {
+            if (errorsDetails.ContainsKey(error.PropertyName))
+            {
+                errorsDetails[error.PropertyName].Add(error.ErrorMessage);
+            }
+            else
+            {
+                errorsDetails.Add(error.PropertyName, new List<string>() { error.ErrorMessage });
+            }
+        }
+
+        problem.Extensions.Add("Errors", errorsDetails);
+
+        return problem;
+    }
+
+    private ProblemDetails ErrorDomain(HttpContext context, Exception e)
+    {
         (string title, HttpStatusCode status) errorException = e switch
         {
             IError error => (error.Errors[0], error.Status),
@@ -45,7 +87,6 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
             Title = errorException.title
         };
 
-        context.Response.ContentType = MediaTypeNames.Application.Json;
-        await context.Response.WriteAsJsonAsync(problem);
+        return problem;
     }
 }
