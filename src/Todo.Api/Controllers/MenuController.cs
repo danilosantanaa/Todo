@@ -30,8 +30,8 @@ public class MenuController : ApiController
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var command = new MenuGetByIdQuery(id);
-        var response = await _mediator.Send(command);
+        var query = new MenuGetByIdQuery(id);
+        var response = await _mediator.Send(query);
         return Ok(response);
     }
 
