@@ -17,13 +17,15 @@ public sealed class MenuUpdateCommandHandler : IRequestHandler<MenuUpdateCommand
 
     public async Task Handle(MenuUpdateCommand request, CancellationToken cancellationToken)
     {
-        MenuId menuId = MenuId.Create(request.id);
+        MenuId menuId = MenuId.Create(request.Id);
+
         var menu = await _unitOfWork.MenuRepository.GetByIdAsync(menuId, cancellationToken);
+        if (menu is null)
+            throw new MenuNotFoundException();
 
-        if (menu is null) throw new MenuNotFoundException();
-
-        menu.Update(request.nome, request.IconUrl);
+        menu.Update(request.Nome, request.IconUrl);
         _unitOfWork.MenuRepository.Update(menu);
+
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

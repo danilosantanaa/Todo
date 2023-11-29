@@ -44,11 +44,12 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
 
     private ProblemDetails ErrorValidations(HttpContext context, Exception e)
     {
+        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
         ValidationError validationError = (ValidationError)e;
 
         ProblemDetails problem = new()
         {
-            Status = (int)HttpStatusCode.BadGateway,
+            Status = (int)HttpStatusCode.BadRequest,
             Title = "Validations Errors"
         };
 

@@ -14,6 +14,6 @@ public class MenuMappingConfig : IRegister
 
         config.NewConfig<(Guid id, MenuRequest request), MenuUpdateCommand>()
             .Map(dst => dst, src => src.request)
-            .Map(dst => dst.id, src => src.id);
+            .Map(dst => dst.Id, src => src.id);
     }
 }
