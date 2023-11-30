@@ -1,8 +1,7 @@
 using Todo.Application.Common.Interfaces.Persistence;
 using Todo.Infrastructure.Persistence.Contexts;
-using Todo.Infrastructure.Persistence.Repositories;
 
-namespace Todo.Infrastructure.Persistences.Repositories;
+namespace Todo.Infrastructure.Persistence.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {

@@ -2,13 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-using Npgsql;
-
 using Todo.Application.Common.Interfaces.Persistence;
-using Todo.Domain.Menus;
+using Todo.Application.Common.Interfaces.Services;
 using Todo.Infrastructure.Persistence.Contexts;
 using Todo.Infrastructure.Persistence.Repositories;
-using Todo.Infrastructure.Persistences.Repositories;
+using Todo.Infrastructure.Services;
 
 namespace Todo.Infrastructure;
 
@@ -18,6 +16,7 @@ public static class DependencyInjection
         this IServiceCollection services,
         ConfigurationManager configuration)
     {
+        services.AddTransient<IDateTimeProvider, DateTimeProvider>();
         services.AddPersistence(configuration);
 
         return services;

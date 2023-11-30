@@ -28,18 +28,19 @@ public class Todo : AggregateRoot<TodoId>
         string descricao,
         TodoTipo tipo,
         TodoRepeticaoTipo repeticaoTipo,
-        DateTime dataConclusao,
-        TodoStatus status,
-        DateTime dataHoraLembrar,
-        MenuId menuId) : base(todoId)
+        MenuId menuId,
+        DateTime dataConclusao = default,
+        DateTime dataHoraLembrar = default
+        ) : base(todoId)
     {
         Descricao = descricao;
         Tipo = tipo;
         RepeticaoTipo = repeticaoTipo;
-        DataConclusao = dataConclusao;
-        Status = status;
-        DataHoraLembrar = dataHoraLembrar;
+        Status = TodoStatus.Pendente;
         MenuId = menuId;
+
+        DataConclusao = dataConclusao == DateTime.MinValue ? DateTime.Now : dataConclusao;
+        DataHoraLembrar = dataHoraLembrar;
     }
 
 #pragma warning disable CS8618
@@ -50,32 +51,32 @@ public class Todo : AggregateRoot<TodoId>
         string descricao,
         TodoTipo tipo,
         TodoRepeticaoTipo repeticaoTipo,
-        DateTime dataConclusao,
-        TodoStatus status,
-        DateTime dataHoraLembrar,
-        MenuId menuId)
+        MenuId menuId,
+        DateTime dataConclusao = default,
+        DateTime dataHoraLembrar = default)
     {
         return new Todo(
             TodoId.Create(),
             descricao,
             tipo,
             repeticaoTipo,
+            menuId,
             dataConclusao,
-            status,
-            dataHoraLembrar,
-            menuId);
+            dataHoraLembrar);
     }
 
-    public TodoEtapa AddEtapa(string descricao, DateTime dataExpiracao)
+    public void AddEtapa(string descricao, DateTime dataExpiracao = default)
     {
         if (Tipo == TodoTipo.Geral)
         {
-            throw new TodoListaNaoPodeSerAdicionadoException();
+            throw new TodoEtapaNaoPodeSerAdicionadoException();
         }
 
-        var todoEtapa = TodoEtapa.Create(descricao, dataExpiracao, false);
+        var todoEtapa = TodoEtapa.Create(descricao);
+        todoEtapa.AddDataExpiracao(dataExpiracao);
+
         _todoEtapas.Append(todoEtapa);
-        return todoEtapa;
+
     }
 
 }
