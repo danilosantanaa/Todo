@@ -1,4 +1,5 @@
 using Todo.Domain.Common.Models;
+using Todo.Domain.Common.Services;
 using Todo.Domain.Todos.Errors;
 using Todo.Domain.Todos.ValueObjects;
 
@@ -17,7 +18,7 @@ public sealed class TodoEtapa : Entity<TodoEtapaId>
         TodoEtapaId id,
         string descricao,
         TodoId todoId,
-        DateTime dateTimeProvider) : base(id)
+        IDateTimeProvider dateTimeProvider) : base(id)
     {
         Descricao = descricao;
         TodoId = todoId;
@@ -28,19 +29,19 @@ public sealed class TodoEtapa : Entity<TodoEtapaId>
     private TodoEtapa() { }
 #pragma warning restore CS8618
 
-    public static TodoEtapa Create(string descricao, Todo todo, DateTime dateTimeProvider)
+    public static TodoEtapa Create(string descricao, Todo todo, IDateTimeProvider dateTimeProvider)
     {
         return new(TodoEtapaId.Create(), descricao, todo.Id, dateTimeProvider);
     }
 
-    public void AddDataExpiracao(DateTime dateTimeProvider, DateTime dataExpiracao = default)
+    public void AddDataExpiracao(IDateTimeProvider dateTimeProvider, DateTime dataExpiracao = default)
     {
         DataExpiracao =
-            dataExpiracao == DateTime.MinValue || dateTimeProvider == dataExpiracao ?
-                dateTimeProvider.AddDays(1)
+            dataExpiracao == DateTime.MinValue || dateTimeProvider.Now == dataExpiracao ?
+                dateTimeProvider.Now.AddDays(1)
                 : dataExpiracao;
 
-        if (DataExpiracao < dateTimeProvider)
+        if (DataExpiracao < dateTimeProvider.Now)
         {
             throw new TodoEtapaDataExpiracaoInvalidoException();
         }

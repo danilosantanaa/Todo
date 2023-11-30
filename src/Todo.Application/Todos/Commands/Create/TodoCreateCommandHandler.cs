@@ -40,7 +40,7 @@ public sealed class TodoCreateCommandHandler : IRequestHandler<TodoCreateCommand
         {
             foreach (var todoEtapaRequest in request.TodoEtapas)
             {
-                var todoEtapa = todo.AddEtapa(todoEtapaRequest.Descricao, _dateTimeProvider.Now, todoEtapaRequest.DataExpiracao);
+                var todoEtapa = todo.AddEtapa(todoEtapaRequest.Descricao, _dateTimeProvider, todoEtapaRequest.DataExpiracao);
                 _unitOfWork.TodoEtapaRepository.Add(todoEtapa);
             }
         }

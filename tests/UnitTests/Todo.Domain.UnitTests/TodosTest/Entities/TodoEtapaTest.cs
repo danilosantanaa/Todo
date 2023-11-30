@@ -1,6 +1,9 @@
 
 using FluentAssertions;
 
+using Moq;
+
+using Todo.Domain.Common.Services;
 using Todo.Domain.Menus.ValueObjects;
 using Todo.Domain.Todos.Entities;
 using Todo.Domain.Todos.Errors;
@@ -27,15 +30,19 @@ public class TodoEtapaTest
     {
         // Arrange
         string descricao = "Lista 1";
-        DateTime dateTimeProvider = new DateTime(2023, 11, 20, 10, 0, 0);
+
+        var dateTimeProviderMock = new Mock<IDateTimeProvider>();
+        dateTimeProviderMock
+            !.Setup(x => x.Now)
+            .Returns(new DateTime(2023, 11, 20, 10, 0, 0));
 
         // Act
-        TodoEtapa todoEtapa = TodoEtapa.Create(descricao, _todo, dateTimeProvider);
+        TodoEtapa todoEtapa = TodoEtapa.Create(descricao, _todo, dateTimeProviderMock!.Object);
 
         // Assert
         todoEtapa.Descricao.Should().Be(descricao);
         todoEtapa.Concluido.Should().Be(false);
-        todoEtapa.DataExpiracao.Should().Be(dateTimeProvider.AddDays(1));
+        todoEtapa.DataExpiracao.Should().Be(dateTimeProviderMock.Object.Now.AddDays(1));
     }
 
     [Theory]
@@ -44,13 +51,18 @@ public class TodoEtapaTest
     {
         // Arrange
         string descricao = "Lista 1";
-        DateTime dateTimeProvider = new DateTime(2023, 11, 20, 10, 0, 0);
+
+        var dateTimeProviderMock = new Mock<IDateTimeProvider>();
+        dateTimeProviderMock
+            !.Setup(x => x.Now)
+            .Returns(new DateTime(2023, 11, 20, 10, 0, 0));
+
         DateTime dataExpiracao = new DateTime(ano, mes, dia, hora, minuto, segundo);
 
         // Act
-        TodoEtapa todoEtapa = TodoEtapa.Create(descricao, _todo, dateTimeProvider);
+        TodoEtapa todoEtapa = TodoEtapa.Create(descricao, _todo, dateTimeProviderMock.Object);
 
-        Action action = () => todoEtapa.AddDataExpiracao(dateTimeProvider, dataExpiracao);
+        Action action = () => todoEtapa.AddDataExpiracao(dateTimeProviderMock.Object, dataExpiracao);
 
         // Assert
         action.Should().Throw<TodoEtapaDataExpiracaoInvalidoException>();

@@ -1,5 +1,8 @@
 using FluentAssertions;
 
+using Moq;
+
+using Todo.Domain.Common.Services;
 using Todo.Domain.Menus.ValueObjects;
 using Todo.Domain.Todos.Enums;
 using Todo.Domain.Todos.Errors;
@@ -32,11 +35,16 @@ public class TodoTest
     public void Todo_Nao_Pode_Adicionar_Etapa_Quando_For_Geral()
     {
         // Arrange
-        DateTime dateTimeProvider = new DateTime(2023, 11, 19, 10, 0, 0);
+        var dateTimeProviderMock = new Mock<IDateTimeProvider>();
+        dateTimeProviderMock
+            !.Setup(x => x.Now)
+            .Returns(new DateTime(2023, 11, 20, 10, 0, 0));
+
         DateTime dataExpiracao = new DateTime(2023, 11, 19, 10, 0, 0);
+
         // Act
         TodoDomain.Todo todo = TodoDomain.Todo.Create("descricao", TodoTipo.Geral, TodoRepeticaoTipo.UmaVez, MenuId.Create());
-        Action action = () => todo.AddEtapa("Etapa 1", dateTimeProvider, dataExpiracao);
+        Action action = () => todo.AddEtapa("Etapa 1", dateTimeProviderMock.Object, dataExpiracao);
 
         // Assert
         action.Should().Throw<TodoEtapaNaoPodeSerAdicionadoException>();

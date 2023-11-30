@@ -1,4 +1,5 @@
 using Todo.Domain.Common.Models;
+using Todo.Domain.Common.Services;
 using Todo.Domain.Menus.ValueObjects;
 using Todo.Domain.Todos.Entities;
 using Todo.Domain.Todos.Enums;
@@ -65,7 +66,7 @@ public class Todo : AggregateRoot<TodoId>
             dataHoraLembrar);
     }
 
-    public TodoEtapa AddEtapa(string descricao, DateTime dateTimeProvider, DateTime dataExpiracao)
+    public TodoEtapa AddEtapa(string descricao, IDateTimeProvider dateTimeProvider, DateTime dataExpiracao)
     {
         if (Tipo == TodoTipo.Geral)
         {
