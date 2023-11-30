@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Todo.Application.Common.Interfaces.Persistence;
-using Todo.Application.Common.Interfaces.Services;
+using Todo.Domain.Common.Services;
 using Todo.Infrastructure.Persistence.Contexts;
 using Todo.Infrastructure.Persistence.Repositories;
 using Todo.Infrastructure.Services;

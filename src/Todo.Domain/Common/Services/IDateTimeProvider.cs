@@ -1,4 +1,4 @@
-namespace Todo.Application.Common.Interfaces.Services;
+namespace Todo.Domain.Common.Services;
 
 public interface IDateTimeProvider
 {

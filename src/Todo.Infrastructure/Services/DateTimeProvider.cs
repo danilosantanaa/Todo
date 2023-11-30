@@ -1,4 +1,4 @@
-using Todo.Application.Common.Interfaces.Services;
+using Todo.Domain.Common.Services;
 
 namespace Todo.Infrastructure.Services;
 

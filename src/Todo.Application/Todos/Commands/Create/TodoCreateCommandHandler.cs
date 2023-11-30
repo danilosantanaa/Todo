@@ -1,12 +1,10 @@
 using MediatR;
 
 using Todo.Application.Common.Interfaces.Persistence;
-using Todo.Application.Common.Interfaces.Services;
+using Todo.Domain.Common.Services;
 using Todo.Domain.Menus.Errors;
 using Todo.Domain.Menus.ValueObjects;
-using Todo.Domain.Todos.Entities;
 using Todo.Domain.Todos.Enums;
-using Todo.Domain.Todos.ValueObjects;
 
 using TodoDomain = Todo.Domain.Todos;
 
