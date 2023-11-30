@@ -89,7 +89,6 @@ public class Todo : AggregateRoot<TodoId>
 
     public void AddDataHoraLembrar(IDateTimeProvider dateTimeProvider, DateTime dataHoraLembrar)
     {
-        dataHoraLembrar = dataHoraLembrar == DateTime.MinValue ? dateTimeProvider.Now : dataHoraLembrar;
         if (dataHoraLembrar < dateTimeProvider.Now)
         {
             throw new TodoDataHoraLembrarMenorQueDateTimeAtual();

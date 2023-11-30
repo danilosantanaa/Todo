@@ -82,6 +82,7 @@ public class TodoTest
 
     [Theory]
     [MemberData(nameof(GetDataEHorasExpiradas))]
+    [MemberData(nameof(GetMinDateTime))]
     public void TodoAdicionarDataHoraLembrar_Deve_Lancar_Erro_Quando_For_Menor_Que_Data_E_Hora_Atual(
         int ano,
         int mes,
@@ -107,5 +108,10 @@ public class TodoTest
         yield return new object[] { 2023, 11, 20, 9, 0, 0 };
         yield return new object[] { 2023, 11, 20, 9, 59, 0 };
         yield return new object[] { 2023, 11, 20, 9, 59, 59 };
+    }
+
+    public static IEnumerable<object[]> GetMinDateTime()
+    {
+        yield return new object[] { 1, 1, 1, 0, 0, 0 };
     }
 }
