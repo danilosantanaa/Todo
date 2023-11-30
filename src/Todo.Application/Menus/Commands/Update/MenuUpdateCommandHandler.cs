@@ -1,3 +1,5 @@
+using System.Net;
+
 using MediatR;
 
 using Todo.Application.Common.Interfaces.Persistence;
@@ -21,7 +23,7 @@ public sealed class MenuUpdateCommandHandler : IRequestHandler<MenuUpdateCommand
 
         var menu = await _unitOfWork.MenuRepository.GetByIdAsync(menuId, cancellationToken);
         if (menu is null)
-            throw new MenuNotFoundException();
+            throw new MenuNotFoundException(HttpStatusCode.BadRequest);
 
         menu.Update(request.Nome, request.IconUrl);
         _unitOfWork.MenuRepository.Update(menu);
