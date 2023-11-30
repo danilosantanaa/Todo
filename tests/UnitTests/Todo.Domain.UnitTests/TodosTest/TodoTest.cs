@@ -31,9 +31,11 @@ public class TodoTest
     [Fact]
     public void Todo_Nao_Pode_Adicionar_Etapa_Quando_For_Geral()
     {
+        // Arrange
+        DateTime dateTimeProvider = new DateTime(2023, 11, 19, 10, 0, 0);
         // Act
         TodoDomain.Todo todo = TodoDomain.Todo.Create("descricao", TodoTipo.Geral, TodoRepeticaoTipo.UmaVez, MenuId.Create());
-        Action action = () => todo.AddEtapa("Etapa 1");
+        Action action = () => todo.AddEtapa("Etapa 1", dateTimeProvider);
 
         // Assert
         action.Should().Throw<TodoEtapaNaoPodeSerAdicionadoException>();

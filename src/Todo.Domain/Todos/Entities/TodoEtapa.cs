@@ -15,28 +15,33 @@ public sealed class TodoEtapa : Entity<TodoEtapaId>
 #pragma warning disable CS8618
     private TodoEtapa(
         TodoEtapaId id,
-        string descricao) : base(id)
+        string descricao,
+        DateTime dateTimeProvider) : base(id)
     {
         Descricao = descricao;
-        AddDataExpiracao();
+        AddDataExpiracao(dateTimeProvider);
         Concluido = false;
     }
 
     private TodoEtapa() { }
 #pragma warning restore CS8618
 
-    public static TodoEtapa Create(string descricao)
+    public static TodoEtapa Create(string descricao, DateTime dateTimeProvider)
     {
-        return new(TodoEtapaId.Create(), descricao);
+        return new(TodoEtapaId.Create(), descricao, dateTimeProvider);
     }
 
-    public void AddDataExpiracao(DateTime dataExpiracao = default)
+    public void AddDataExpiracao(DateTime dateTimeProvider, DateTime dataExpiracao = default)
     {
-        if (DataExpiracao < DateTime.Now)
+        DataExpiracao =
+            dataExpiracao == DateTime.MinValue || dateTimeProvider == dataExpiracao ?
+                dateTimeProvider.AddDays(1)
+                : dataExpiracao;
+
+        if (DataExpiracao < dateTimeProvider)
         {
             throw new TodoEtapaDataExpiracaoInvalidoException();
         }
 
-        DataExpiracao = dataExpiracao == DateTime.MinValue ? DateTime.Now : dataExpiracao;
     }
 }
