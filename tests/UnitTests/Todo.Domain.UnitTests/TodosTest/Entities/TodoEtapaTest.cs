@@ -1,13 +1,27 @@
 
 using FluentAssertions;
 
+using Todo.Domain.Menus.ValueObjects;
 using Todo.Domain.Todos.Entities;
 using Todo.Domain.Todos.Errors;
+
+using TodoDomain = Todo.Domain.Todos;
 
 namespace Todo.Domain.UnitTests.TodosTest.Entities;
 
 public class TodoEtapaTest
 {
+    private readonly TodoDomain.Todo _todo;
+    public TodoEtapaTest()
+    {
+        _todo =
+            TodoDomain
+                .Todo.Create("Descricao",
+                    TodoDomain.Enums.TodoTipo.Etapa,
+                    TodoDomain.Enums.TodoRepeticaoTipo.UmaVez,
+                    MenuId.Create());
+    }
+
     [Fact]
     public void TodoEtapa_Deve_Ser_Criado()
     {
@@ -16,7 +30,7 @@ public class TodoEtapaTest
         DateTime dateTimeProvider = new DateTime(2023, 11, 20, 10, 0, 0);
 
         // Act
-        TodoEtapa todoEtapa = TodoEtapa.Create(descricao, dateTimeProvider);
+        TodoEtapa todoEtapa = TodoEtapa.Create(descricao, _todo, dateTimeProvider);
 
         // Assert
         todoEtapa.Descricao.Should().Be(descricao);
@@ -34,7 +48,7 @@ public class TodoEtapaTest
         DateTime dataExpiracao = new DateTime(ano, mes, dia, hora, minuto, segundo);
 
         // Act
-        TodoEtapa todoEtapa = TodoEtapa.Create(descricao, dateTimeProvider);
+        TodoEtapa todoEtapa = TodoEtapa.Create(descricao, _todo, dateTimeProvider);
 
         Action action = () => todoEtapa.AddDataExpiracao(dateTimeProvider, dataExpiracao);
 

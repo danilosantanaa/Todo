@@ -16,6 +16,7 @@ public sealed class TodoEtapa : Entity<TodoEtapaId>
     private TodoEtapa(
         TodoEtapaId id,
         string descricao,
+        TodoId todoId,
         DateTime dateTimeProvider) : base(id)
     {
         Descricao = descricao;
@@ -26,9 +27,9 @@ public sealed class TodoEtapa : Entity<TodoEtapaId>
     private TodoEtapa() { }
 #pragma warning restore CS8618
 
-    public static TodoEtapa Create(string descricao, DateTime dateTimeProvider)
+    public static TodoEtapa Create(string descricao, Todo todo, DateTime dateTimeProvider)
     {
-        return new(TodoEtapaId.Create(), descricao, dateTimeProvider);
+        return new(TodoEtapaId.Create(), descricao, todo.Id, dateTimeProvider);
     }
 
     public void AddDataExpiracao(DateTime dateTimeProvider, DateTime dataExpiracao = default)

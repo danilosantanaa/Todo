@@ -35,9 +35,12 @@ public sealed class TodoCreateCommandHandler : IRequestHandler<TodoCreateCommand
         // TODO: Melhorar o Data Conclusão e Data Hora Lembrar
         TodoDomain.Todo todo = TodoDomain.Todo.Create(request.Descricao, tipo, repeticaoTipo, menuId);
 
-        foreach (var todoEtapaRequest in request.TodoEtapas)
+        if (request.TodoEtapas is not null)
         {
-            todo.AddEtapa(todoEtapaRequest.Descricao, todoEtapaRequest.DataExpiracao);
+            foreach (var todoEtapaRequest in request.TodoEtapas)
+            {
+                todo.AddEtapa(todoEtapaRequest.Descricao, todoEtapaRequest.DataExpiracao);
+            }
         }
 
         _unitOfWork.TodoRepository.Add(todo);

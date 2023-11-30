@@ -72,7 +72,7 @@ public class Todo : AggregateRoot<TodoId>
             throw new TodoEtapaNaoPodeSerAdicionadoException();
         }
 
-        var todoEtapa = TodoEtapa.Create(descricao, dateTimeProvider);
+        var todoEtapa = TodoEtapa.Create(descricao, this, dateTimeProvider);
         todoEtapa.AddDataExpiracao(dataExpiracao);
 
         _todoEtapas.Append(todoEtapa);
