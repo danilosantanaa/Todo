@@ -10,10 +10,11 @@ public static class DependencyInjection
 
         services.AddEndpointsApiExplorer();
         services.AddLogging();
-        services.AddTransient<GlobalExceptionHandlingMiddleware>();
         services.AddSwaggerGen();
         services.AddControllers();
         services.AddMappings();
+
+        services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
         return services;
     }

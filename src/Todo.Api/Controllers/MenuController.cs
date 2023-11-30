@@ -19,8 +19,7 @@ public class MenuController : ApiController
     public MenuController(
         ISender mediator,
         IMapper mapper) : base(mediator, mapper)
-    {
-    }
+    { }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()

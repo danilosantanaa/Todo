@@ -23,7 +23,13 @@ public class TodoTest
            !.Setup(x => x.Now)
            .Returns(new DateTime(2023, 11, 20, 10, 0, 0));
 
-        _todoGlobal = TodoDomain.Todo.Create("Descricao", TodoTipo.Geral, TodoRepeticaoTipo.UmaVez, MenuId.Create(), _dateTimeProviderMock.Object);
+        _todoGlobal =
+        TodoDomain.Todo.Create(
+            "Descricao",
+            TodoTipo.Geral,
+            TodoRepeticaoTipo.UmaVez,
+            MenuId.Create(),
+            _dateTimeProviderMock.Object);
     }
 
     [Theory]

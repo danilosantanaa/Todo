@@ -38,13 +38,19 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
                 ErrorValidations(context, e)
             : ErrorDomain(context, e);
 
+        context.Response.StatusCode = (int)problem.Status!;
         context.Response.ContentType = MediaTypeNames.Application.Json;
+
+        if (IsNoContent(problem))
+        {
+            return;
+        }
+
         await context.Response.WriteAsJsonAsync(problem);
     }
 
     private ProblemDetails ErrorValidations(HttpContext context, Exception e)
     {
-        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
         ValidationError validationError = (ValidationError)e;
 
         ProblemDetails problem = new()
@@ -80,7 +86,6 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
         };
 
         _logger.LogError(e, e.Message);
-        context.Response.StatusCode = (int)errorException.status;
 
         ProblemDetails problem = new()
         {
@@ -89,5 +94,10 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
         };
 
         return problem;
+    }
+
+    private static bool IsNoContent(ProblemDetails problem)
+    {
+        return problem.Status == (int)HttpStatusCode.NoContent;
     }
 }

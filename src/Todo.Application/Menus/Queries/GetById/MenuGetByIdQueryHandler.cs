@@ -2,6 +2,7 @@ using MediatR;
 
 using Todo.Application.Common.Interfaces.Persistence;
 using Todo.Application.Menus.Common;
+using Todo.Domain.Menus.Errors;
 using Todo.Domain.Menus.ValueObjects;
 
 namespace Todo.Application.Menus.Queries.GetById;
@@ -19,6 +20,10 @@ public sealed class MenuGetByIdQueryHandler : IRequestHandler<MenuGetByIdQuery, 
     {
         MenuId menuId = MenuId.Create(request.id);
         var menu = await _unitOfWork.MenuRepository.GetByIdAsync(menuId);
+        if (menu is null)
+        {
+            throw new MenuNotFoundException();
+        }
 
         return new MenuResponse(menu!.Id.Value, menu.Nome, menu.IconUrl);
     }

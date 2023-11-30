@@ -12,8 +12,7 @@ namespace Todo.Api.Controllers;
 public sealed class TodoController : ApiController
 {
     public TodoController(ISender mediator, IMapper mapper) : base(mediator, mapper)
-    {
-    }
+    { }
 
     [HttpPost]
     public async Task<IActionResult> Create(TodoRequest request)
