@@ -65,7 +65,7 @@ public class Todo : AggregateRoot<TodoId>
             dataHoraLembrar);
     }
 
-    public void AddEtapa(string descricao, DateTime dateTimeProvider, DateTime dataExpiracao = default)
+    public TodoEtapa AddEtapa(string descricao, DateTime dateTimeProvider, DateTime dataExpiracao = default)
     {
         if (Tipo == TodoTipo.Geral)
         {
@@ -73,10 +73,11 @@ public class Todo : AggregateRoot<TodoId>
         }
 
         var todoEtapa = TodoEtapa.Create(descricao, this, dateTimeProvider);
-        todoEtapa.AddDataExpiracao(dataExpiracao);
+        todoEtapa.AddDataExpiracao(dateTimeProvider, dataExpiracao);
 
         _todoEtapas.Append(todoEtapa);
 
+        return todoEtapa;
     }
 
 }

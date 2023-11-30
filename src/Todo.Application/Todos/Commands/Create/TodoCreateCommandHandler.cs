@@ -39,11 +39,13 @@ public sealed class TodoCreateCommandHandler : IRequestHandler<TodoCreateCommand
         {
             foreach (var todoEtapaRequest in request.TodoEtapas)
             {
-                todo.AddEtapa(todoEtapaRequest.Descricao, todoEtapaRequest.DataExpiracao);
+                var todoEtapa = todo.AddEtapa(todoEtapaRequest.Descricao, todoEtapaRequest.DataExpiracao);
+                _unitOfWork.TodoEtapaRepository.Add(todoEtapa);
             }
         }
 
         _unitOfWork.TodoRepository.Add(todo);
+
         await _unitOfWork.SaveChangesAsync();
 
         return todo.Id.Value;

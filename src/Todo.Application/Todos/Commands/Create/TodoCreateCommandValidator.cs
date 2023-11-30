@@ -22,10 +22,8 @@ public sealed class TodoCreateCommandValidator : AbstractValidator<TodoCreateCom
             .NotEmpty();
 
         RuleFor(command => command.TodoEtapas)
-            .Null().DependentRules(() =>
-            {
-                RuleFor(x => x.Tipo).Equals(TodoTipo.Etapa);
-            });
+            .NotNull()
+            .When(x => x.Tipo.Equals(TodoTipo.Etapa));
     }
 }
 

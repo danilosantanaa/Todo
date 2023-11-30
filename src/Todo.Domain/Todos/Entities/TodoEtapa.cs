@@ -20,6 +20,7 @@ public sealed class TodoEtapa : Entity<TodoEtapaId>
         DateTime dateTimeProvider) : base(id)
     {
         Descricao = descricao;
+        TodoId = todoId;
         AddDataExpiracao(dateTimeProvider);
         Concluido = false;
     }

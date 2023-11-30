@@ -13,10 +13,12 @@ public class UnitOfWork : IUnitOfWork
 
         MenuRepository = new MenuRepository(_context);
         TodoRepository = new TodoRepository(_context);
+        TodoEtapaRepository = new TodoEtapaRepository(_context);
     }
 
     public IMenuRepository MenuRepository { get; set; }
     public ITodoRepository TodoRepository { get; set; }
+    public ITodoEtapaRepository TodoEtapaRepository { get; set; }
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
