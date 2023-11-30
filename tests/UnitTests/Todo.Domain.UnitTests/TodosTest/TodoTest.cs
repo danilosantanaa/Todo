@@ -33,9 +33,10 @@ public class TodoTest
     {
         // Arrange
         DateTime dateTimeProvider = new DateTime(2023, 11, 19, 10, 0, 0);
+        DateTime dataExpiracao = new DateTime(2023, 11, 19, 10, 0, 0);
         // Act
         TodoDomain.Todo todo = TodoDomain.Todo.Create("descricao", TodoTipo.Geral, TodoRepeticaoTipo.UmaVez, MenuId.Create());
-        Action action = () => todo.AddEtapa("Etapa 1", dateTimeProvider);
+        Action action = () => todo.AddEtapa("Etapa 1", dateTimeProvider, dataExpiracao);
 
         // Assert
         action.Should().Throw<TodoEtapaNaoPodeSerAdicionadoException>();

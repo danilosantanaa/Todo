@@ -1,6 +1,7 @@
 using MediatR;
 
 using Todo.Application.Common.Interfaces.Persistence;
+using Todo.Application.Common.Interfaces.Services;
 using Todo.Domain.Menus.Errors;
 using Todo.Domain.Menus.ValueObjects;
 using Todo.Domain.Todos.Entities;
@@ -14,10 +15,12 @@ namespace Todo.Application.Todos.Commands.Create;
 public sealed class TodoCreateCommandHandler : IRequestHandler<TodoCreateCommand, Guid>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
-    public TodoCreateCommandHandler(IUnitOfWork unitOfWork)
+    public TodoCreateCommandHandler(IUnitOfWork unitOfWork, IDateTimeProvider dateTimeProvider)
     {
         _unitOfWork = unitOfWork;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<Guid> Handle(TodoCreateCommand request, CancellationToken cancellationToken)
@@ -39,7 +42,7 @@ public sealed class TodoCreateCommandHandler : IRequestHandler<TodoCreateCommand
         {
             foreach (var todoEtapaRequest in request.TodoEtapas)
             {
-                var todoEtapa = todo.AddEtapa(todoEtapaRequest.Descricao, todoEtapaRequest.DataExpiracao);
+                var todoEtapa = todo.AddEtapa(todoEtapaRequest.Descricao, _dateTimeProvider.Now, todoEtapaRequest.DataExpiracao);
                 _unitOfWork.TodoEtapaRepository.Add(todoEtapa);
             }
         }
