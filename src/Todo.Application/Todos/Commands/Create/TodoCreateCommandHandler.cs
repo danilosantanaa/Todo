@@ -34,7 +34,7 @@ public sealed class TodoCreateCommandHandler : IRequestHandler<TodoCreateCommand
         TodoRepeticaoTipo repeticaoTipo = Enum.Parse<TodoRepeticaoTipo>(request.RepeticaoTipo);
 
         // TODO: Melhorar o Data Conclusão e Data Hora Lembrar
-        TodoDomain.Todo todo = TodoDomain.Todo.Create(request.Descricao, tipo, repeticaoTipo, menuId);
+        TodoDomain.Todo todo = TodoDomain.Todo.Create(request.Descricao, tipo, repeticaoTipo, menuId, _dateTimeProvider);
 
         if (request.TodoEtapas is not null)
         {

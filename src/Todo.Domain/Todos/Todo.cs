@@ -30,8 +30,7 @@ public class Todo : AggregateRoot<TodoId>
         TodoTipo tipo,
         TodoRepeticaoTipo repeticaoTipo,
         MenuId menuId,
-        DateTime dataConclusao = default,
-        DateTime dataHoraLembrar = default
+        IDateTimeProvider dateTimeProvider
         ) : base(todoId)
     {
         Descricao = descricao;
@@ -39,9 +38,7 @@ public class Todo : AggregateRoot<TodoId>
         RepeticaoTipo = repeticaoTipo;
         Status = TodoStatus.Pendente;
         MenuId = menuId;
-
-        DataConclusao = dataConclusao == DateTime.MinValue ? DateTime.Now : dataConclusao;
-        DataHoraLembrar = dataHoraLembrar;
+        AddDataConclusao(dateTimeProvider, dateTimeProvider.Now);
     }
 
 #pragma warning disable CS8618
@@ -53,8 +50,7 @@ public class Todo : AggregateRoot<TodoId>
         TodoTipo tipo,
         TodoRepeticaoTipo repeticaoTipo,
         MenuId menuId,
-        DateTime dataConclusao = default,
-        DateTime dataHoraLembrar = default)
+        IDateTimeProvider dateTimeProvider)
     {
         return new Todo(
             TodoId.Create(),
@@ -62,8 +58,7 @@ public class Todo : AggregateRoot<TodoId>
             tipo,
             repeticaoTipo,
             menuId,
-            dataConclusao,
-            dataHoraLembrar);
+            dateTimeProvider);
     }
 
     public TodoEtapa AddEtapa(string descricao, IDateTimeProvider dateTimeProvider, DateTime dataExpiracao)
@@ -79,6 +74,28 @@ public class Todo : AggregateRoot<TodoId>
         _todoEtapas.Append(todoEtapa);
 
         return todoEtapa;
+    }
+
+    public void AddDataConclusao(IDateTimeProvider dateTimeProvider, DateTime dataConclusao)
+    {
+        dataConclusao = dataConclusao == DateTime.MinValue ? dateTimeProvider.Now : dataConclusao;
+        if (dataConclusao < dateTimeProvider.Now)
+        {
+            throw new TodoDataConclusaoMenorQueDateTimeAtual();
+        }
+
+        DataConclusao = dataConclusao;
+    }
+
+    public void AddDataHoraLembrar(IDateTimeProvider dateTimeProvider, DateTime dataHoraLembrar)
+    {
+        dataHoraLembrar = dataHoraLembrar == DateTime.MinValue ? dateTimeProvider.Now : dataHoraLembrar;
+        if (dataHoraLembrar < dateTimeProvider.Now)
+        {
+            throw new TodoDataHoraLembrarMenorQueDateTimeAtual();
+        }
+
+        DataHoraLembrar = dataHoraLembrar;
     }
 
 }
