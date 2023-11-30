@@ -2,6 +2,7 @@ using Todo.Domain.Common.Models;
 using Todo.Domain.Menus.ValueObjects;
 using Todo.Domain.Todos.Entities;
 using Todo.Domain.Todos.Enums;
+using Todo.Domain.Todos.Errors;
 using Todo.Domain.Todos.ValueObjects;
 
 namespace Todo.Domain.Todos;
@@ -67,6 +68,11 @@ public class Todo : AggregateRoot<TodoId>
 
     public TodoEtapa AddEtapa(string descricao, DateTime dataExpiracao)
     {
+        if (Tipo == TodoTipo.Geral)
+        {
+            throw new TodoListaNaoPodeSerAdicionadoException();
+        }
+
         var todoEtapa = TodoEtapa.Create(descricao, dataExpiracao, false);
         _todoEtapas.Append(todoEtapa);
         return todoEtapa;
