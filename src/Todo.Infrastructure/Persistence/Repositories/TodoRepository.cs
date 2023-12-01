@@ -28,6 +28,10 @@ public class TodoRepository : Repository<todoDomain.Todo>, ITodoRepository
         await base.GetByIdAsync(id, is_query_mode: true);
         var query = GetQueryStmt();
 
-        return await query.Include(x => x.TodoEtapas).Where(t => t.Id == id).FirstOrDefaultAsync();
+        query = query.Include(t => t.TodoEtapas);
+
+        query = query.Where(t => t.Id == id);
+
+        return await query.FirstOrDefaultAsync();
     }
 }

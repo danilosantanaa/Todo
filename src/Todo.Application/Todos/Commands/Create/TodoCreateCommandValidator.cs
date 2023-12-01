@@ -27,7 +27,7 @@ public sealed class TodoCreateCommandValidator : AbstractValidator<TodoCreateCom
     }
 }
 
-public sealed class TodoEtapaCommandValidator : AbstractValidator<TodoEtapaCommand>
+public sealed class TodoEtapaCommandValidator : AbstractValidator<TodoEtapaCreateCommand>
 {
     public TodoEtapaCommandValidator()
     {

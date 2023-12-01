@@ -1,1 +1,24 @@
-@hostname = http://localhost:5298
+@hostname=http://localhost:5298
+@todoId=03d6d69f-5a82-4848-bc67-4abad389e0cd
+
+PUT {{hostname}}/api/Todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "descricao": "Teste 1 - Edicao",
+    "tipo": "Etapa",
+    "repeticaoTipo": "UmaVez",
+    "dataConclusao": "2023-11-30T14:12:19.059327-03:00",
+  "todoEtapas": [
+    {
+      "todoEtapaId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "descricao": "Etapa 1",
+      "dataExpiracao": "2023-12-01T22:33:22.145Z"
+    },
+    {
+       "todoEtapaId": "2405c6fa-50ee-4027-9991-ee65e30cd037",
+       "descricao": "Etapa 3",
+       "dataExpiracao": "2023-12-01T22:33:22.145Z"
+    }
+  ]
+}

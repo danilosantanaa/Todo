@@ -1,16 +1,16 @@
 namespace Todo.Contracts.Todo.Request;
 
-public record TodoRequest(
+public record TodoUpdateRequest(
     string Descricao,
     string Tipo,
     string RepeticaoTipo,
     DateTime DataConclusao,
     DateTime DataHoraLembrar,
-    Guid MenuId,
-    List<TodoEtapaRequest>? TodoEtapas
+    List<TodoEtapaUpdateRequest>? TodoEtapas
 );
 
-public record TodoEtapaRequest(
+public record TodoEtapaUpdateRequest(
+    Guid TodoEtapaId,
     string Descricao,
     DateTime DataExpiracao
 );

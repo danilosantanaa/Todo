@@ -9,11 +9,11 @@ public record TodoCreateCommand(
     DateTime DataConclusao,
     DateTime DataHoraLembrar,
     Guid MenuId,
-    List<TodoEtapaCommand> TodoEtapas
+    List<TodoEtapaCreateCommand> TodoEtapas
 ) : IRequest<Guid>;
 
 
-public record TodoEtapaCommand(
+public record TodoEtapaCreateCommand(
     string Descricao,
     DateTime DataExpiracao
 );

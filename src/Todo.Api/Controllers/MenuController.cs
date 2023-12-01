@@ -25,6 +25,7 @@ public class MenuController : ApiController
     public async Task<IActionResult> GetAll()
     {
         var result = await _mediator.Send(new MenuGetAllQuery());
+
         return Ok(result);
     }
 
@@ -33,6 +34,7 @@ public class MenuController : ApiController
     {
         var query = new MenuGetByIdQuery(id);
         var response = await _mediator.Send(query);
+
         return Ok(response);
     }
 
@@ -42,6 +44,7 @@ public class MenuController : ApiController
         var command = _mapper.Map<MenuCreateCommand>(request);
         var result = await _mediator.Send(command);
         var response = _mapper.Map<MenuResponse>((result, command));
+
         return Ok(response);
     }
 
@@ -50,6 +53,7 @@ public class MenuController : ApiController
     {
         var command = _mapper.Map<MenuUpdateCommand>((id, request));
         await _mediator.Send(command);
+
         return Ok(command);
     }
 
@@ -58,6 +62,7 @@ public class MenuController : ApiController
     {
         var command = new MenuDeleteCommand(id);
         await _mediator.Send(command);
-        return Ok();
+
+        return NoContent();
     }
 }

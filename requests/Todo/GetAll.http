@@ -1,1 +1,3 @@
-@hostname = http://localhost:5298
+@hostname=http://localhost:5298
+
+GET {{hostname}}/api/Todo

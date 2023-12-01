@@ -37,8 +37,8 @@ public sealed class TodoUpdateCommandHandler : IRequestHandler<TodoUpdateCommand
 
         if (request.TodoEtapas.Any())
         {
-            AddOrUpdateEtapas(request, todo);
             RemoveEtapas(request, todo);
+            AddOrUpdateEtapas(request, todo);
         }
 
         _unitOfWork.TodoRepository.Update(todo);
@@ -76,7 +76,8 @@ public sealed class TodoUpdateCommandHandler : IRequestHandler<TodoUpdateCommand
                     !request.TodoEtapas
                     .Select(y => y.TodoEtapaId)
                     .Contains(x.Id.Value)
-                );
+                )
+                .ToList();
 
         foreach (var etapa in etapasDeletadas!)
         {

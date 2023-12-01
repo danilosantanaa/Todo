@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 using Todo.Application.Todos.Commands.Create;
+using Todo.Application.Todos.Commands.Update;
 using Todo.Application.Todos.Queries.GetAll;
 using Todo.Application.Todos.Queries.GetById;
 using Todo.Contracts.Todo.Request;
@@ -27,7 +28,7 @@ public sealed class TodoController : ApiController
         return Ok(todoResponse);
     }
 
-    [HttpGet("todoId:guid")]
+    [HttpGet("{todoId:guid}")]
     public async Task<IActionResult> GetById(Guid todoId)
     {
         var query = new TodoGetByIdQuery(todoId);
@@ -38,10 +39,20 @@ public sealed class TodoController : ApiController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(TodoRequest request)
+    public async Task<IActionResult> Create(TodoCreateRequest request)
     {
         var command = _mapper.Map<TodoCreateCommand>(request);
         var result = await _mediator.Send(command);
+
+        return Ok(result);
+    }
+
+    [HttpPut("{todoId:guid}")]
+    public async Task<IActionResult> Update(Guid todoId, TodoUpdateRequest request)
+    {
+        var command = _mapper.Map<TodoUpdateCommand>((todoId, request));
+        var result = await _mediator.Send(command);
+
         return Ok(result);
     }
 }

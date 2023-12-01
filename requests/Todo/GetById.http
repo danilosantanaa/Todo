@@ -1,1 +1,4 @@
-@hostname = http://localhost:5298
+@hostname=http://localhost:5298
+@todoId=03d6d69f-5a82-4848-bc67-4abad389e0cd
+
+GET {{hostname}}/api/Todo/{{todoId}}
