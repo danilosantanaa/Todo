@@ -4,7 +4,6 @@ using Moq;
 
 using Todo.Domain.Common.Services;
 using Todo.Domain.Menus.ValueObjects;
-using Todo.Domain.Todos.Entities;
 using Todo.Domain.Todos.Enums;
 using Todo.Domain.Todos.Errors;
 using Todo.Domain.Todos.ValueObjects;

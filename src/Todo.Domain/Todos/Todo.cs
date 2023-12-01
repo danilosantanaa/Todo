@@ -97,12 +97,6 @@ public class Todo : AggregateRoot<TodoId>
         return todoEtapa!;
     }
 
-    public TodoEtapa? RemoveEtapa(TodoEtapa todoEtapa)
-    {
-        _todoEtapas.Remove(todoEtapa);
-        return todoEtapa;
-    }
-
     public void AddDataConclusao(IDateTimeProvider dateTimeProvider, DateTime dataConclusao)
     {
         dataConclusao = dataConclusao == DateTime.MinValue ? dateTimeProvider.Now : dataConclusao;
