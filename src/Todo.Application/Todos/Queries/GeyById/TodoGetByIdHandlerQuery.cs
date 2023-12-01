@@ -8,11 +8,11 @@ using TodoDomain = Todo.Domain.Todos;
 
 namespace Todo.Application.Todos.Queries.GetById;
 
-public sealed class TodoGetByIdHandlerQuery : IRequestHandler<TodoGetByIdQuery, TodoDomain.Todo>
+public sealed class TodoGetByIdQueryHandler : IRequestHandler<TodoGetByIdQuery, TodoDomain.Todo>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public TodoGetByIdHandlerQuery(IUnitOfWork unitOfWork)
+    public TodoGetByIdQueryHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
