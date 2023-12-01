@@ -1,1 +1,4 @@
-@hostname = http://localhost:5298
+@hostname=http://localhost:5298
+@todoId=ca636017-dc9d-48a6-92c6-4f8ef963dec7
+
+DELETE  {{hostname}}/api/Todo/{{todoId}}

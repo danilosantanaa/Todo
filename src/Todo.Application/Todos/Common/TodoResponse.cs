@@ -1,1 +1,0 @@
-namespace Todo.Application.Todos.Common;

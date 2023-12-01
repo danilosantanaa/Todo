@@ -33,7 +33,6 @@ public sealed class TodoCreateCommandHandler : IRequestHandler<TodoCreateCommand
         TodoTipo tipo = Enum.Parse<TodoTipo>(request.Tipo);
         TodoRepeticaoTipo repeticaoTipo = Enum.Parse<TodoRepeticaoTipo>(request.RepeticaoTipo);
 
-        // TODO: Melhorar o Data Conclusão e Data Hora Lembrar
         TodoDomain.Todo todo = TodoDomain.Todo.Create(request.Descricao, tipo, repeticaoTipo, menuId, _dateTimeProvider);
 
         if (request.TodoEtapas is not null)
@@ -47,7 +46,7 @@ public sealed class TodoCreateCommandHandler : IRequestHandler<TodoCreateCommand
 
         _unitOfWork.TodoRepository.Add(todo);
 
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return todo.Id.Value;
     }

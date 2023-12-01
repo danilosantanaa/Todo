@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 using Todo.Application.Todos.Commands.Create;
+using Todo.Application.Todos.Commands.Delete;
 using Todo.Application.Todos.Commands.Update;
 using Todo.Application.Todos.Queries.GetAll;
 using Todo.Application.Todos.Queries.GetById;
@@ -54,5 +55,14 @@ public sealed class TodoController : ApiController
         var result = await _mediator.Send(command);
 
         return Ok(result);
+    }
+
+    [HttpDelete("{todoId:guid}")]
+    public async Task<IActionResult> Delete(Guid todoId)
+    {
+        var command = new TodoDeleteCommand(todoId);
+        await _mediator.Send(command);
+
+        return NoContent();
     }
 }

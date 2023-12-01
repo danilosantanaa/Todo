@@ -42,7 +42,7 @@ public sealed class TodoUpdateCommandHandler : IRequestHandler<TodoUpdateCommand
         }
 
         _unitOfWork.TodoRepository.Update(todo);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return todo.Id.Value;
     }
