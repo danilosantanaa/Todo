@@ -48,6 +48,22 @@ public class TodoEtapaTest
         todoEtapa.DataExpiracao.Should().Be(_dateTimeProviderMock.Object.Now.AddDays(1));
     }
 
+    [Fact]
+    public void TodoEtapa_Deve_Ser_Atualizado()
+    {
+        // Arrange
+        string descricao_antiga = "Descricao Antiga";
+        string descricao_nova = "Descricao Nova";
+
+        // Act
+        TodoEtapa todoEtapa = TodoEtapa.Create(descricao_antiga, _todo, _dateTimeProviderMock!.Object);
+        todoEtapa.Update(descricao_nova);
+
+        // Assert
+        todoEtapa.Descricao.Should().NotBe(descricao_antiga);
+        todoEtapa.TodoId.Should().Be(_todo.Id);
+    }
+
     [Theory]
     [MemberData(nameof(GetDataEHorasExpiradas))]
     public void TodoEtapa_Criada_Com_Error_Data_Expiracao_Menor_Que_DataTime_Atual(int ano, int mes, int dia, int hora, int minuto, int segundo)

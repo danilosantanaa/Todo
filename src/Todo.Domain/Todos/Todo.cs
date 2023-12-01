@@ -22,7 +22,7 @@ public class Todo : AggregateRoot<TodoId>
 
     public MenuId MenuId { get; private set; }
 
-    public IReadOnlyList<TodoEtapa> TodoEtapas => _todoEtapas.ToList().AsReadOnly();
+    public IReadOnlyList<TodoEtapa> TodoEtapas => _todoEtapas.AsReadOnly();
 
     private Todo(
         TodoId todoId,
@@ -61,6 +61,13 @@ public class Todo : AggregateRoot<TodoId>
             dateTimeProvider);
     }
 
+    public void Update(string descricao, TodoTipo tipo, TodoRepeticaoTipo repeticaoTipo)
+    {
+        Descricao = descricao;
+        Tipo = tipo;
+        RepeticaoTipo = repeticaoTipo;
+    }
+
     public TodoEtapa AddEtapa(string descricao, IDateTimeProvider dateTimeProvider, DateTime dataExpiracao)
     {
         if (Tipo == TodoTipo.Geral)
@@ -71,8 +78,28 @@ public class Todo : AggregateRoot<TodoId>
         var todoEtapa = TodoEtapa.Create(descricao, this, dateTimeProvider);
         todoEtapa.AddDataExpiracao(dateTimeProvider, dataExpiracao);
 
-        _todoEtapas.Append(todoEtapa);
+        _todoEtapas.Add(todoEtapa);
 
+        return todoEtapa;
+    }
+
+    public TodoEtapa UpdateEtapa(TodoEtapaId todoEtapaId, string descricao, IDateTimeProvider dateTimeProvider, DateTime dataExpiracao)
+    {
+        if (Tipo == TodoTipo.Geral)
+        {
+            throw new TodoEtapaNaoPodeSerAdicionadoException();
+        }
+
+        var todoEtapa = _todoEtapas.Find(x => x.Id == todoEtapaId);
+        todoEtapa?.Update(descricao);
+        todoEtapa?.AddDataExpiracao(dateTimeProvider, dataExpiracao);
+
+        return todoEtapa!;
+    }
+
+    public TodoEtapa? RemoveEtapa(TodoEtapa todoEtapa)
+    {
+        _todoEtapas.Remove(todoEtapa);
         return todoEtapa;
     }
 
@@ -95,6 +122,11 @@ public class Todo : AggregateRoot<TodoId>
         }
 
         DataHoraLembrar = dataHoraLembrar;
+    }
+
+    public bool IsEtapaExists(TodoEtapaId todoEtapaId)
+    {
+        return _todoEtapas.Any(te => te.Id == todoEtapaId);
     }
 
 }

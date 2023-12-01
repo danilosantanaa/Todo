@@ -34,6 +34,11 @@ public sealed class TodoEtapa : Entity<TodoEtapaId>
         return new(TodoEtapaId.Create(), descricao, todo.Id, dateTimeProvider);
     }
 
+    public void Update(string descricao)
+    {
+        Descricao = descricao;
+    }
+
     public void AddDataExpiracao(IDateTimeProvider dateTimeProvider, DateTime dataExpiracao = default)
     {
         DataExpiracao =
